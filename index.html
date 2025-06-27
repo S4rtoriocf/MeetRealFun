@@ -5,15 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hot Encounters Near You - No Strings Attached!</title>
     
-    <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-G0BVPQ1ETG"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-G0BVPQ1ETG"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
 
-  gtag('config', 'G-G0BVPQ1ETG');
-</script>
+      gtag('config', 'G-G0BVPQ1ETG');
+    </script>
 
     <style>
         /* ===== Main Styles ===== */
@@ -45,7 +44,7 @@
             color: #FF4757;
         }
         
-        /* ===== CTA Button ===== */
+        /* ===== CTA Button with Animation ===== */
         .cta-button {
             display: inline-block;
             background: #FF4757;
@@ -57,10 +56,29 @@
             text-align: center;
             margin: 10px 0;
             transition: all 0.3s;
+            animation: pulse 2s infinite; /* Added animation */
         }
+        
+        /* Keyframe animation for the button pulse effect */
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(255, 71, 87, 0.7);
+            }
+            70% {
+                transform: scale(1.05);
+                box-shadow: 0 0 10px 15px rgba(255, 71, 87, 0);
+            }
+            100% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(255, 71, 87, 0);
+            }
+        }
+
         .cta-button:hover {
             background: #ff2d3f;
-            transform: scale(1.02);
+            transform: scale(1.08); /* Slightly increased hover scale */
+            animation: none; /* Stops the pulse on hover for a better user experience */
         }
         
         /* ===== Hero Section ===== */
@@ -132,8 +150,8 @@
             font-weight: bold;
         }
         
-        /* ===== Countdown ===== */
-        .countdown {
+        /* ===== Urgency/Countdown Section ===== */
+        .urgency-message {
             background: #FF4757;
             padding: 15px;
             border-radius: 5px;
@@ -164,23 +182,20 @@
 </head>
 <body>
     <div class="container">
-        <!-- Header -->
         <header>
             <div class="logo">NoStrings</div>
             <a href="https://bggcgce.pixloffrs.com/s/59cd6ef16fd92" class="cta-button">JOIN FREE NOW</a>
         </header>
         
-        <!-- Hero Section -->
         <section class="hero">
             <h1>🔥 <u>Casual Encounters</u> Without the Drama!</h1>
             <p><i>"Real people. Real fun. No commitments."</i></p>
-            <img src="https://raw.githubusercontent.com/S4rtoriocf/MeetRealFun/refs/heads/main/Fotos/landing01.jpg">
+            <img src="https://raw.githubusercontent.com/S4rtoriocf/MeetRealFun/refs/heads/main/Fotos/landing01.jpg" class="hero-image">
             <p class="image-caption">Click to see uncensored profiles</p>
             <a href="https://bggcgce.pixloffrs.com/s/59cd6ef16fd92" class="cta-button">👉 SEE WHO'S AVAILABLE TONIGHT</a>
-            <div class="countdown">⏰ 23 spots left in your area!</div>
+            <div id="dynamic-message" class="urgency-message"></div>
         </section>
         
-        <!-- Benefits -->
         <section class="benefits">
             <h2>Why You'll Love It:</h2>
             <ul>
@@ -191,7 +206,6 @@
             </ul>
         </section>
         
-        <!-- Testimonials -->
         <h2>😈 Real Experiences</h2>
         <div class="testimonials">
             <div class="testimonial">
@@ -204,7 +218,6 @@
             </div>
         </div>
         
-        <!-- How It Works -->
         <section>
             <h2>🚀 How It Works</h2>
             <ol>
@@ -214,14 +227,12 @@
             </ol>
         </section>
         
-        <!-- Final CTA -->
         <section style="text-align: center; margin: 40px 0;">
             <h2>Stop Wasting Time on Dating Apps</h2>
             <p><strong>327 people in your area</strong> are active now!</p>
             <a href="https://bggcgce.pixloffrs.com/s/59cd6ef16fd92" class="cta-button">🔥 FIND YOUR TONIGHT'S FUN</a>
         </section>
         
-        <!-- FAQ -->
         <section class="benefits">
             <h2>❓ FAQs</h2>
             <p><strong>Q: Is this for hookups or dating?</strong><br>
@@ -231,11 +242,39 @@
             A: We don't share your data or activity.</p>
         </section>
         
-        <!-- Footer -->
         <footer>
             <p>© 2024 NoStrings. 18+ Only.<br>
             <a href="#" style="color: #999;">Privacy</a> | <a href="#" style="color: #999;">Terms</a></p>
         </footer>
     </div>
+
+    <script>
+        // Script for the dynamic message
+        const messageElement = document.getElementById('dynamic-message');
+        
+        const messages = [
+            "vagas restantes na sua área!",
+            "pessoas acabaram de entrar perto de você!",
+            "conversas ativas acontecendo agora!",
+            "perfis online perto de você!"
+        ];
+
+        function getRandomNumber(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        function updateMessage() {
+            const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+            const randomNumber = getRandomNumber(7, 25); // Generates a number between 7 and 25
+            
+            messageElement.textContent = `⏰ ${randomNumber} ${randomMessage}`;
+        }
+
+        // Update the message every 4 seconds (4000 milliseconds)
+        setInterval(updateMessage, 4000);
+
+        // Initial call to display a message immediately on page load
+        updateMessage();
+    </script>
 </body>
 </html>
