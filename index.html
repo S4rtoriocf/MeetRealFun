@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Your Adventure Starts Here</title>
+  <title>Your Next Connection Awaits</title>
   <style>
     /* Reset e Configurações Globais */
     * {
@@ -14,31 +14,61 @@
     html, body {
       height: 100%;
       font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
-      background-color: #0c0c14;
+      background-color: #0c0c14; /* Cor de fallback se a imagem não carregar */
       color: #e0e0e0;
-      overflow: hidden;
+      overflow: hidden; /* Mantém o fundo fixo e sem barras de rolagem desnecessárias */
       display: flex;
       justify-content: center;
       align-items: center;
     }
 
-    /* Canvas para o fundo animado */
+    /* Imagem de Fundo - NOVO */
+    body {
+      background-image: url('https://aprivateinvite.github.io/MeetRealFun/Fotos/Img02'); /* <<<< SUBSTITUA ESTA URL PELA SUA IMAGEM! */
+      background-size: cover; /* Garante que a imagem cubra toda a área */
+      background-position: center center; /* Centraliza a imagem */
+      background-repeat: no-repeat; /* Evita repetição da imagem */
+      background-attachment: fixed; /* Fixa a imagem no fundo enquanto o conteúdo rola (se houvesse) */
+    }
+
+    /* Overlay Escuro para Melhorar o Contraste do Texto - NOVO */
+    body::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.6); /* Camada escura semitransparente (60% de opacidade) */
+      z-index: 0; /* Fica abaixo do conteúdo, mas acima da imagem de fundo */
+    }
+
+    /* Canvas para o fundo animado (opcional, pode ser removido se a imagem for suficiente) */
+    /* Mantenho para caso você queira os dois efeitos combinados ou remova a imagem */
     #particle-canvas {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      z-index: 0;
+      z-index: 1; /* Colocado acima do overlay para as partículas serem visíveis sobre ele */
+      opacity: 0.3; /* Ajustei a opacidade para não competir com a imagem */
     }
+
 
     /* Container do conteúdo principal */
     .content-wrapper {
       position: relative;
-      z-index: 1;
+      z-index: 2; /* Garante que o conteúdo fique acima do canvas e do overlay */
       text-align: center;
       padding: 20px;
       animation: fadeIn 1.5s ease-in-out;
+      max-width: 90%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
     }
 
     @keyframes fadeIn {
@@ -50,43 +80,79 @@
     h1 {
       font-size: 48px;
       font-weight: 700;
-      color: #00aaff; /* Azul elétrico */
-      text-shadow: 0 0 10px rgba(0, 170, 255, 0.5);
-      margin-bottom: 15px;
+      color: #ff007f;
+      text-shadow: 0 0 15px rgba(255, 0, 127, 0.7);
+      margin-bottom: 0;
     }
 
     /* Frases rotativas */
     .phrase {
       font-size: 22px;
       font-weight: 300;
-      margin-bottom: 40px;
-      min-height: 60px; /* Evita "saltos" de layout */
+      margin-bottom: 0;
+      min-height: 60px;
       line-height: 1.5;
       color: #c5c5c5;
     }
 
+    /* Seções de contagem */
+    .count-section {
+        background-color: rgba(0, 0, 0, 0.6); /* Ajustei o alpha para 0.6 para mais contraste */
+        border-radius: 10px;
+        padding: 15px 20px;
+        box-shadow: 0 0 15px rgba(255, 0, 127, 0.3);
+        border: 1px solid rgba(255, 0, 127, 0.5);
+        width: fit-content;
+        max-width: 95%;
+    }
+    .count-section p {
+        font-size: 18px;
+        font-weight: bold;
+        color: #fff;
+        margin: 0;
+        line-height: 1.4;
+    }
+    .count-number {
+        color: #ff007f;
+        font-size: 28px;
+        font-weight: 900;
+        text-shadow: 0 0 8px rgba(255, 0, 127, 0.8);
+    }
+    .count-text {
+        font-size: 16px;
+        color: #ddd;
+    }
+
     /* Botão de Ação (Call to Action) */
     .cta-button {
-      background: #00aaff;
+      background: #ff007f;
       color: #fff;
-      font-size: 20px;
+      font-size: 24px;
       font-weight: bold;
       text-decoration: none;
-      padding: 18px 40px;
+      padding: 20px 45px;
       border: none;
       border-radius: 50px;
       cursor: pointer;
       transition: all 0.3s ease;
-      box-shadow: 0 0 20px rgba(0, 170, 255, 0.4), inset 0 0 10px rgba(255, 255, 255, 0.2);
+      box-shadow: 0 0 25px rgba(255, 0, 127, 0.5), inset 0 0 12px rgba(255, 255, 255, 0.2);
+      animation: pulse 2s infinite;
+      white-space: nowrap;
     }
     .cta-button:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 35px rgba(0, 170, 255, 0.7), inset 0 0 15px rgba(255, 255, 255, 0.3);
+      transform: scale(1.08);
+      box-shadow: 0 0 45px rgba(255, 0, 127, 0.9), inset 0 0 18px rgba(255, 255, 255, 0.4);
+    }
+
+    @keyframes pulse {
+        0% { transform: scale(1); box-shadow: 0 0 25px rgba(255, 0, 127, 0.5); }
+        50% { transform: scale(1.03); box-shadow: 0 0 40px rgba(255, 0, 127, 0.8); }
+        100% { transform: scale(1); box-shadow: 0 0 25px rgba(255, 0, 127, 0.5); }
     }
 
     /* Ícones de features */
     .features {
-      margin-top: 30px;
+      margin-top: 0;
       display: flex;
       justify-content: center;
       gap: 30px;
@@ -97,19 +163,31 @@
       align-items: center;
       gap: 8px;
       font-size: 14px;
+      color: #aaa;
     }
 
     /* Responsividade */
     @media (max-width: 600px) {
       h1 {
-        font-size: 36px;
+        font-size: 38px;
       }
       .phrase {
-        font-size: 18px;
+        font-size: 20px;
+        min-height: 50px;
+      }
+      .count-section p {
+          font-size: 16px;
+      }
+      .count-number {
+          font-size: 24px;
       }
       .cta-button {
-        font-size: 18px;
-        padding: 16px 35px;
+        font-size: 20px;
+        padding: 18px 40px;
+      }
+      .features {
+          flex-wrap: wrap;
+          gap: 15px;
       }
     }
   </style>
@@ -119,9 +197,19 @@
   <canvas id="particle-canvas"></canvas>
 
   <div class="content-wrapper">
-    <h1>Meet Real Fun</h1>
+    <h1>Your Next Connection Awaits!</h1>
     <p id="phrase" class="phrase"></p>
-    <a href="https://bggcgce.pixloffrs.com/s/59cd6ef16fd92" class="cta-button">Join Now</a>
+
+    <div class="count-section">
+        <p><span id="girls-count" class="count-number">3000+</span> <span class="count-text">women active in your area!</span></p>
+    </div>
+
+    <div class="count-section">
+        <p><span id="nearby-count" class="count-number">0</span> <span class="count-text">people online and ready to chat NOW!</span></p>
+    </div>
+
+    <a href="https://bggcgce.pixloffrs.com/s/59cd6ef16fd92" class="cta-button">Join Now!</a>
+
     <div class="features">
       <div class="feature-item">💬 Chat</div>
       <div class="feature-item">❤️ Dates</div>
@@ -135,9 +223,9 @@
       "It all starts with a simple 'hey'.",
       "Talk all night. Stay for breakfast.",
       "Less routine. More adventure. Tonight.",
-      "Find someone who gets it.",
+      "Find someone who truly gets you.",
       "The connection you didn't know you needed.",
-      "Chat. Flirt. Meet."
+      "Chat. Flirt. Meet. Your way."
     ];
 
     let phraseIndex = 0;
@@ -153,6 +241,18 @@
     setInterval(rotatePhrase, 5000);
     // --- End of rotating phrases functionality ---
 
+    // --- Dynamic Counters (New functionality) ---
+    const nearbyCountElement = document.getElementById('nearby-count');
+    let currentNearbyCount = 250; // Initial value for the nearby people counter
+
+    function updateNearbyCount() {
+        let change = Math.floor(Math.random() * 10) - 4;
+        currentNearbyCount = Math.max(200, currentNearbyCount + change);
+        currentNearbyCount = Math.min(350, currentNearbyCount);
+        nearbyCountElement.textContent = currentNearbyCount;
+    }
+
+    setInterval(updateNearbyCount, 1500);
 
     // --- Animated background script ---
     const canvas = document.getElementById('particle-canvas');
@@ -185,7 +285,7 @@
       draw() {
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
-        ctx.fillStyle = 'rgba(0, 170, 255, 0.3)';
+        ctx.fillStyle = 'rgba(255, 0, 127, 0.3)';
         ctx.fill();
       }
       update() {
@@ -210,7 +310,7 @@
         let y = (Math.random() * ((innerHeight - size * 2) - (size * 2)) + size * 2);
         let directionX = (Math.random() * 0.4) - 0.2;
         let directionY = (Math.random() * 0.4) - 0.2;
-        let color = '#00aaff';
+        let color = '#ff007f';
         particlesArray.push(new Particle(x, y, directionX, directionY, size, color));
       }
     }
